@@ -15,8 +15,7 @@
 				width: 70vw;
 			}
 
-			textarea,
-			input {
+			textarea,input {
 				margin-left: 5vw;
 			}
 			
@@ -36,9 +35,7 @@
 			.date{
 				float: right;
 			}
-			.page{
-				margin-top: 5vw;
-			}
+			
 			a{
 				background: #87CEFA;
 				margin-left: 3vw;
@@ -47,6 +44,12 @@
 			}
 			a:hover{
 				background: limegreen;
+			}
+			.bottom {
+				margin-bottom: 10vw;
+			}
+			.nowpage{
+				background: #FA8072;
 			}
 		</style>
 	</head>
@@ -58,23 +61,12 @@
 			<br><br>
 			<input type="submit" value="发布留言" />
 		</form>
-		<?php
-			include('show.php');
-		?>
 
-		<!-- 查看留言 -->
-		
-		<?php foreach($rows as $data){ ?>
-			<div class="top">
-				<span><?php echo $data['user']; ?></span>
-				<span class="date"><?php echo date('Y-m-d-H:i:s',$data['time']); ?></span>
-			</div>
-			<div class="bottom"><?php echo $data['content']; ?></div>
-		<?php } ?>
 		
 		<!-- 留言分页 -->
 		<div class="page">
 			<?php
+			include('connect.php');
 			// 使用COUNT(*)计算数据总量
 			$sql="SELECT COUNT(*) FROM `msg`";
 			$countResult=$db->query($sql);
@@ -86,21 +78,33 @@
 			// 向上取整
 			$maxPage=ceil($dataTotal/$pageNum);
 			
-			// index.php页面加载时,自动定位page=1
 			// isset检查变量是否已设置并且非null
 			if(isset($_GET['page'])){
 				$page=$_GET['page'];
 			}else{
+			// index.php页面加载时,自动定位page=1
 				$page=1;
 			}
 			
-			// $passBy=($page-1)*$pageNum;
+			// 不同页面数据的偏移量
+			$passBy=($page-1)*$pageNum;
 			
+			// 查看留言
+			include('show.php');
+			foreach($rows as $data){ ?>
+				<div class="top">
+					<span><?php echo $data['user']; ?></span>
+					<span class="date"><?php echo date('Y-m-d H:i:s',$data['time']); ?></span>
+				</div>
+				<div class="bottom"><?php echo $data['content']; ?></div>
+			<?php }
+		
+			// 为了给当前页码数加一个样式
 			for($i=1;$i<=$maxPage;$i++){
 				// 使用$_GET获取当前页码
 				if($i==$page){
 					// 为当前页码添加class
-				echo "<a href='index.php?page={$i}'>{$i}</a>";
+				echo "<a class='nowpage' href='index.php?page={$i}'>{$i}</a>";
 				}else{
 					echo "<a href='index.php?page={$i}'>{$i}</a>";
 				}
