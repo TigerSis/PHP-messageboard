@@ -51,13 +51,19 @@
 			.nowpage{
 				background: #FA8072;
 			}
+			.bottom img{
+				height: 30vw;
+				margin-top: 2vw;
+			}
 		</style>
 	</head>
 	<body>
-		<form action="save.php" method="post">
+		<form action="save.php" method="post" enctype="multipart/form-data">
 			留言:<textarea rows="8" cols="30" name="txt"></textarea>
 			<br><br>
 			用户名:<input type="text" name="user" />
+			<br><br>
+			附加图片:<input type="file" name="img">
 			<br><br>
 			<input type="submit" value="发布留言" />
 		</form>
@@ -96,7 +102,16 @@
 					<span><?php echo $data['user']; ?></span>
 					<span class="date"><?php echo date('Y-m-d H:i:s',$data['time']); ?></span>
 				</div>
-				<div class="bottom"><?php echo $data['content']; ?></div>
+				<div class="bottom"><?php echo $data['content']; ?>
+				<br>
+				<!-- 图片显示区域 -->
+				<?php 
+				// 判断是否有图片,有图再上传
+					if($data['pic']!=null){ 
+						echo "<img src='upload/{$data['pic']}'>";
+					}
+				?>
+				</div>
 			<?php }
 		
 			// 为了给当前页码数加一个样式
