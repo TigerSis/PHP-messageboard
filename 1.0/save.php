@@ -5,9 +5,7 @@
 	// var_dump($_FILES['img']);
 	// $_FILES的error状态码不等于4表示文件未上传
 	$file=$_FILES['img'];
-	if($file['error']==4){
-		die ('未选择文件!');
-	}else{
+	if($file['error']<>4){
 		if($file['error']==0){
 			echo('文件上传成功');
 			$ext=pathinfo($file['name'],PATHINFO_EXTENSION);

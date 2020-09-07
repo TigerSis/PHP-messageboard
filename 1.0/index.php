@@ -22,6 +22,7 @@
 			.top{
 				background: lightskyblue;
 				margin-top: 10vw;
+				line-height: 10vw;
 			}
 			.bottom{
 				background: khaki;
@@ -43,10 +44,13 @@
 				padding: 0.5vw 1.5vw;
 			}
 			a:hover{
-				background: limegreen;
+				background: seagreen;
+				color: beige;
 			}
 			.bottom {
 				margin-bottom: 10vw;
+				position: relative;
+				padding: 3vw 0;
 			}
 			.nowpage{
 				background: #FA8072;
@@ -54,6 +58,12 @@
 			.bottom img{
 				height: 30vw;
 				margin-top: 2vw;
+			}
+			.del{
+				position: absolute;
+				right: 2vw;
+				bottom: 2vw;
+				font-size: 4.5vw;
 			}
 		</style>
 	</head>
@@ -111,6 +121,7 @@
 						echo "<img src='upload/{$data['pic']}'>";
 					}
 				?>
+				<a href="delete.php?id=<?php echo $data['id']; ?>" class="del">删除</a>
 				</div>
 			<?php }
 		
