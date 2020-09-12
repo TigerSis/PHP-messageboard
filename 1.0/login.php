@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>登录区域</title>
 		<style type="text/css">
 			*{
 				margin: 0;
