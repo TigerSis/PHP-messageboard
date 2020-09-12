@@ -68,7 +68,7 @@
 		$reslut=$db->query($sql);
 		$row=$reslut->fetch_array(MYSQLI_ASSOC);
 		// var_dump($row);
-		if($row!=NULL){
+		if($row){
 			// echo('<script>alert("登录成功")</script>');
 			session_start();
 			// 自定义session变量并赋值
