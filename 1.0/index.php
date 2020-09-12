@@ -5,55 +5,102 @@
 		<meta charset="utf-8">
 		<title></title>
 		<style type="text/css">
+			*{
+				margin: 0;
+				padding: 0;
+			}
 			body{
-				font-size: 5vw;
-				background: whitesmoke;
+				font-size: 3vw;
+				background: beige;
+			}
+			a{
+				text-decoration: none;
+				text-align: center;
+			}
+			
+		#leave,#sign{
+				float: right;
+				clear: both;
+				font-size: 2vw;
+				width: 6vw;
+				background: limegreen;
+				margin: 1vw;
+				line-height: 4vw;
+			}
+			#login{
+				float: right;
+				font-size: 2vw;
+				width: 6vw;
+				background: limegreen;
+				margin: 1vw;
+				line-height: 4vw;
+			}
+			#leave{
+				display: none;
+			}
+			form{
+				width: 90%;
+				height: 60vw;
+				clear: both;
+				margin: 0 auto;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-around;
+				align-items: center;
+				font-weight: bold;
+			}
+			form div span{
+				width: 13vw;
+				display: inline-block;
+				text-align: right;
 			}
 			textarea {
 				resize: none;
+				/* 顶部对齐 */
 				vertical-align: top;
-				width: 70vw;
+				width: 55vw;
+				height: 26vw;
 			}
 
 			textarea,input {
-				margin-left: 5vw;
+				margin-left: 1vw;
 			}
 			
-			.top{
-				background: lightskyblue;
-				margin-top: 10vw;
-				line-height: 10vw;
+			[type='text'],[type="file"]{
+				width: 55vw;
+				height: 4vw;
 			}
-			.bottom{
-				background: khaki;
-			}
-			[type='text'] {
-				width: 50vw;
+			[type="file"]{
+				font-size: 2vw;
 			}
 			[type='submit'] {
-				width: 20vw;
+				width: 15vw;
+				height: 5vw;
+				font-size: 2.5vw;
+			}
+			.pagenum{
+				background: #87CEFA;
+				margin-left: 1vw;
+				padding: 0.5vw 1.1vw;
+				color: darkblue;
+			}
+			#nowpage{
+				background: #FA8072;
+			}
+			.top{
+				background: lightskyblue;
+				margin-top: 8vw;
+				line-height: 10vw;
+				padding: 0 3vw;
 			}
 			.date{
 				float: right;
 			}
-			
-			a{
-				background: #87CEFA;
-				margin-left: 3vw;
-				text-decoration: none;
-				padding: 0.5vw 1.5vw;
-			}
-			a:hover{
-				background: seagreen;
-				color: beige;
-			}
 			.bottom {
-				margin-bottom: 10vw;
+				background: khaki;
+				margin-bottom: 8vw;
 				position: relative;
-				padding: 3vw 0;
-			}
-			.nowpage{
-				background: #FA8072;
+				padding: 3vw;
 			}
 			.bottom img{
 				height: 30vw;
@@ -63,19 +110,25 @@
 				position: absolute;
 				right: 2vw;
 				bottom: 2vw;
-				font-size: 4.5vw;
+				font-size: 3vw;
+			}
+			a:hover{
+				color: white;
+			}
+			.page{
+				display: none;
 			}
 		</style>
 	</head>
 	<body>
+		<a href="sign.php" id="sign">注册</a>
+		<a href="login.php" id="login">登录</a>
+		<a href="leave.php" id="leave">退出</a>
 		<form action="save.php" method="post" enctype="multipart/form-data">
-			留言:<textarea rows="8" cols="30" name="txt"></textarea>
-			<br><br>
-			用户名:<input type="text" name="user" />
-			<br><br>
-			附加图片:<input type="file" name="img">
-			<br><br>
-			<input type="submit" value="发布留言" />
+			<div><span>留言:</span><textarea rows="8" cols="30" name="txt"></textarea></div>
+			<div><span>用户名:</span><input type="text" name="user" /></div>
+			<div><span>附加图片:</span><input type="file" name="img"></div>
+			<div><input type="submit" value="发布留言" /></div>
 		</form>
 
 		
@@ -130,10 +183,22 @@
 				// 使用$_GET获取当前页码
 				if($i==$page){
 					// 为当前页码添加class
-				echo "<a class='nowpage' href='index.php?page={$i}'>{$i}</a>";
+				echo "<a id='nowpage' class='pagenum' href='index.php?page={$i}'>{$i}</a>";
 				}else{
-					echo "<a href='index.php?page={$i}'>{$i}</a>";
+					echo "<a class='pagenum' href='index.php?page={$i}'>{$i}</a>";
 				}
+			}
+			// 登录后显示留言
+			session_start();
+			if($_SESSION['loginCode']=='1'){
+				echo "<style> 
+						.page,#leave{
+							display:block;
+						}
+						#login,#sign {
+							display:none;
+						}
+					</style>";
 			}
 		?>
 		</div>
